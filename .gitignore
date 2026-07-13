@@ -27,3 +27,4 @@ apps/web/.env.local
 .vscode/
 .idea/
 .claude/
+.gstack/
