@@ -52,4 +52,12 @@ If Docker is available, `docker compose up -d db` starts a Postgres 16 container
 
 ## Scope
 
-This is a phased MVP: Home, About, Our Farm, Pig Breeds, Gallery, Products, Contact + a single-admin CMS panel. Blog/News, testimonials, full analytics, and e-commerce/booking are deferred to a later phase.
+A small startup pig farm website — the farm only sells piglets and breeding pigs (boars and sows). No meat products, no industrial-farming claims.
+
+Public site (bilingual English/नेपाली, cookie-based toggle): Home, About Our Farm, Available Piglets, Available Breeding Pigs, Farm Gallery, Farm Location, Contact.
+
+Admin panel (`/admin`, single owner, plain-language UI): Dashboard, My Pigs (multi-photo listings), Photo Gallery (albums), Messages (inquiries), Homepage editor, About Page editor, Farm Details.
+
+All content lives in the database; bilingual fields are stored as `*_en`/`*_ne` column pairs and Nepali falls back to English when empty. Admin edits appear on the public site immediately (public reads are uncached).
+
+Blog/News, testimonials, full analytics, and e-commerce/booking are deferred to a later phase.
