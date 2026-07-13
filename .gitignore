@@ -28,3 +28,4 @@ apps/web/.env.local
 .idea/
 .claude/
 .gstack/
+PRODUCTION.md
