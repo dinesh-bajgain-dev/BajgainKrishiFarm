@@ -20,7 +20,7 @@ export async function SiteFooter() {
         <div className="space-y-3 lg:col-span-2">
           <Link href="/" className="flex items-center gap-2 font-heading text-lg font-semibold">
             <span className="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
-              <PiggyBank className="size-5" />
+              <PiggyBank aria-hidden className="size-5" />
             </span>
             {farmName}
           </Link>
@@ -49,7 +49,7 @@ export async function SiteFooter() {
           </div>
         </div>
 
-        <div>
+        <nav aria-label="Footer">
           <h3 className="font-heading text-sm font-semibold uppercase tracking-wide text-foreground/80">
             {dict.footer.explore}
           </h3>
@@ -62,9 +62,9 @@ export async function SiteFooter() {
               </li>
             ))}
           </ul>
-        </div>
+        </nav>
 
-        <div>
+        <address className="not-italic">
           <h3 className="font-heading text-sm font-semibold uppercase tracking-wide text-foreground/80">
             {dict.footer.contact}
           </h3>
@@ -92,7 +92,7 @@ export async function SiteFooter() {
               </li>
             )}
           </ul>
-        </div>
+        </address>
       </div>
       <div className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
         &copy; {new Date().getFullYear()} {farmName}. {dict.footer.rights}
