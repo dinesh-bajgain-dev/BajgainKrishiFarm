@@ -153,6 +153,7 @@ const en = {
     description: "Photos from around the farm.",
     all: "All photos",
     empty: "No photos yet — please check back soon.",
+    photoAlt: "A photo from around our pig farm",
   },
   location: {
     eyebrow: "Visit Us",
@@ -280,6 +281,7 @@ const ne: Dictionary = {
     description: "फार्म वरिपरिका तस्बिरहरू।",
     all: "सबै तस्बिर",
     empty: "अहिले कुनै तस्बिर छैन — केही समयपछि फेरि हेर्नुहोस्।",
+    photoAlt: "हाम्रो सुँगुर फार्म वरिपरिको तस्बिर",
   },
   location: {
     eyebrow: "भ्रमण गर्नुहोस्",
