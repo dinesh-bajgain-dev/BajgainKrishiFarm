@@ -4,12 +4,16 @@ import { PigListing } from "@/components/pigs/pig-listing";
 import { apiFetchOrNull } from "@/lib/api";
 import { getDictionary } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { buildPageMetadata } from "@/lib/seo";
 import type { PageBanners } from "@/types/entities";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Available Piglets",
-  description: "Healthy, weaned piglets from our small family farm, ready for their new homes.",
-};
+  description:
+    "Healthy, weaned piglets for sale from our small family farm in Arjundhara, Nepal — dewormed, eating solid feed, and ready for their new homes.",
+  path: "/piglets",
+  keywords: ["piglets for sale", "weaned piglets Nepal", "buy piglets Jhapa"],
+});
 
 export default async function PigletsPage() {
   const locale = await getLocale();
