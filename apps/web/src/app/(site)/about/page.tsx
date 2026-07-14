@@ -5,12 +5,16 @@ import { AnimatedSection } from "@/components/shared/animated-section";
 import { apiFetchOrNull } from "@/lib/api";
 import { formatNumber, getDictionary, loc } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { buildPageMetadata } from "@/lib/seo";
 import type { AboutPage, FarmInfo, PageBanners } from "@/types/entities";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "About Our Farm",
-  description: "The story of our small family pig farm and how we raise our animals.",
-};
+  description:
+    "The story of our small family pig farm in Arjundhara, Nepal — who we are and how we raise healthy piglets and breeding pigs with daily, hands-on care.",
+  path: "/about",
+  keywords: ["family pig farm story", "how we raise pigs Nepal"],
+});
 
 function Paragraphs({ text }: { text: string }) {
   return (
