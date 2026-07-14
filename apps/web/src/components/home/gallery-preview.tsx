@@ -40,7 +40,7 @@ export async function GalleryPreview({ locale }: { locale: Locale }) {
               >
                 <EntityImage
                   src={image.image_url}
-                  alt={loc(image, "caption", locale)}
+                  alt={loc(image, "caption", locale) || dict.gallery.photoAlt}
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                   sizes="(min-width: 1024px) 16vw, 33vw"
