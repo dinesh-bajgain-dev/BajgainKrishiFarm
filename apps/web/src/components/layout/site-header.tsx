@@ -20,14 +20,18 @@ export async function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2 font-heading text-lg font-semibold">
+        <Link
+          href="/"
+          aria-label={farmName}
+          className="flex items-center gap-2 font-heading text-lg font-semibold"
+        >
           <span className="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <PiggyBank className="size-5" />
+            <PiggyBank aria-hidden className="size-5" />
           </span>
           <span className="hidden sm:inline">{farmName}</span>
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-1">
+        <nav aria-label="Main" className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) => (
             <Link
               key={link.href}
