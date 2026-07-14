@@ -1,12 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cache } from "react";
 import { ArrowLeft } from "lucide-react";
 import { PigImageGallery } from "@/components/pigs/pig-image-gallery";
 import { InquiryForm } from "@/components/forms/inquiry-form";
-import { apiFetchOrNull } from "@/lib/api";
+import { JsonLd } from "@/components/shared/json-ld";
+import { apiFetchOrNull, resolveImageUrl } from "@/lib/api";
+import { SITE_NAME } from "@/lib/constants";
 import { formatAge, formatPrice, getDictionary, loc } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { buildBreadcrumbJsonLd, buildPageMetadata, buildPigProductJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import type { Pig } from "@/types/entities";
 
@@ -16,14 +20,33 @@ const STATUS_STYLES: Record<Pig["status"], string> = {
   sold: "bg-zinc-500 text-white",
 };
 
+// Memoized so generateMetadata and the page body share one API request.
+const getPig = cache((id: string) => apiFetchOrNull<Pig>(`/api/pigs/${id}`));
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  const [pig, locale] = await Promise.all([apiFetchOrNull<Pig>(`/api/pigs/${id}`), getLocale()]);
-  return { title: pig ? loc(pig, "name", locale) : "Pig" };
+  const pig = await getPig(id);
+  if (!pig) return { title: "Pig Not Found", robots: { index: false } };
+
+  const listingLabel = pig.listing_type === "piglet" ? "Piglet" : "Breeding Pig";
+  const description = (
+    pig.description_en.trim() ||
+    `${pig.breed_en} ${listingLabel.toLowerCase()} from ${SITE_NAME}, a small family pig farm in Arjundhara, Nepal.`
+  ).slice(0, 160);
+  // Real photos only — with none, the site-wide OG image applies instead.
+  const photo = pig.image_urls.length > 0 ? resolveImageUrl(pig.image_urls[0]) : null;
+
+  return buildPageMetadata({
+    title: `${pig.name_en} — ${pig.breed_en} ${listingLabel}`,
+    description,
+    path: `/pigs/${pig.id}`,
+    keywords: [pig.breed_en, `${pig.breed_en} ${listingLabel.toLowerCase()} Nepal`],
+    ...(photo && !photo.endsWith(".svg") ? { ogImages: [photo] } : {}),
+  });
 }
 
 export default async function PigDetailPage({
@@ -34,10 +57,11 @@ export default async function PigDetailPage({
   const { id } = await params;
   const locale = await getLocale();
   const dict = getDictionary(locale);
-  const pig = await apiFetchOrNull<Pig>(`/api/pigs/${id}`);
+  const pig = await getPig(id);
   if (!pig) notFound();
 
   const backHref = pig.listing_type === "piglet" ? "/piglets" : "/breeding-pigs";
+  const backLabel = pig.listing_type === "piglet" ? dict.nav.piglets : dict.nav.breedingPigs;
   const age = formatAge(pig.date_of_birth, locale);
   const description = loc(pig, "description", locale);
   const name = loc(pig, "name", locale);
@@ -53,6 +77,14 @@ export default async function PigDetailPage({
   return (
     <section className="py-12 sm:py-16">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <JsonLd data={buildPigProductJsonLd(pig)} />
+        <JsonLd
+          data={buildBreadcrumbJsonLd([
+            { name: dict.nav.home, path: "/" },
+            { name: backLabel, path: backHref },
+            { name, path: `/pigs/${pig.id}` },
+          ])}
+        />
         <Link
           href={backHref}
           className="inline-flex items-center gap-2 text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
