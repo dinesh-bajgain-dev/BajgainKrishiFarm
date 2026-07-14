@@ -6,12 +6,16 @@ import { LinkButton } from "@/components/ui/link-button";
 import { apiFetchOrNull } from "@/lib/api";
 import { getDictionary, loc } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { buildPageMetadata } from "@/lib/seo";
 import type { FarmInfo, PageBanners } from "@/types/entities";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Find Our Farm",
-  description: "Where our farm is located and when you can visit.",
-};
+  description:
+    "Directions, address, and opening hours for Bajgain Krishi Farm in Arjundhara, Jhapa, Nepal — visitors are welcome, call ahead and we'll show you around.",
+  path: "/location",
+  keywords: ["pig farm location Jhapa", "visit pig farm Nepal", "farm directions Arjundhara"],
+});
 
 export default async function LocationPage() {
   const locale = await getLocale();
