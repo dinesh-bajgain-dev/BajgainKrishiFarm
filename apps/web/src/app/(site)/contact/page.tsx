@@ -6,13 +6,16 @@ import { InquiryForm } from "@/components/forms/inquiry-form";
 import { apiFetchOrNull } from "@/lib/api";
 import { getDictionary, loc } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { buildPageMetadata } from "@/lib/seo";
 import type { FarmInfo, PageBanners } from "@/types/entities";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Contact Us",
   description:
-    "Get in touch to ask about our piglets, breeding pigs, or visiting the farm.",
-};
+    "Call, WhatsApp, or message Bajgain Krishi Farm to ask about available piglets, breeding pigs, or visiting our farm in Arjundhara, Nepal.",
+  path: "/contact",
+  keywords: ["contact pig farm Nepal", "buy piglets contact"],
+});
 
 export default async function ContactPage() {
   const locale = await getLocale();
