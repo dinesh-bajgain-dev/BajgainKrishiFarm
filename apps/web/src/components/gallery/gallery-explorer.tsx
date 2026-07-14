@@ -71,11 +71,12 @@ export function GalleryExplorer({
               <button
                 type="button"
                 onClick={() => setLightboxIndex(i)}
+                aria-label={caption || dict.gallery.photoAlt}
                 className="group relative block w-full overflow-hidden rounded-2xl border border-border/60"
               >
                 <EntityImage
                   src={image.image_url}
-                  alt={caption}
+                  alt={caption || dict.gallery.photoAlt}
                   width={500}
                   height={500}
                   className="w-full object-cover transition-transform duration-500 group-hover:scale-105"
