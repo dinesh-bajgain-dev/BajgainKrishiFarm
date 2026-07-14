@@ -4,12 +4,16 @@ import { GalleryExplorer } from "@/components/gallery/gallery-explorer";
 import { apiFetchOrNull } from "@/lib/api";
 import { getDictionary } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
+import { buildPageMetadata } from "@/lib/seo";
 import type { Album, GalleryImage, PageBanners } from "@/types/entities";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildPageMetadata({
   title: "Farm Gallery",
-  description: "Photos of our pigs and everyday life around the farm.",
-};
+  description:
+    "Photos of our pigs, piglets, and everyday life around Bajgain Krishi Farm — see how our animals live before you buy.",
+  path: "/gallery",
+  keywords: ["pig farm photos", "farm gallery Nepal"],
+});
 
 export default async function GalleryPage() {
   const locale = await getLocale();
