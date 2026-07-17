@@ -33,6 +33,9 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
   keywords: SITE_KEYWORDS,
   applicationName: SITE_NAME,
+  icons: {
+    icon: "/favicon.svg",
+  },
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   category: "Agriculture",
@@ -60,7 +63,11 @@ export const metadata: Metadata = {
       ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
       : {}),
     ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
-      ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } }
+      ? {
+          other: {
+            "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+          },
+        }
       : {}),
   },
 };
