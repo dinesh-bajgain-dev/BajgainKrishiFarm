@@ -20,7 +20,7 @@ def login(payload: LoginRequest, response: Response, db: Session = Depends(get_d
         key=SESSION_COOKIE_NAME,
         value=token,
         httponly=True,
-        samesite="lax",
+        samesite="none",
         # Safe in local dev too: browsers treat http://localhost as a secure
         # context, so a Secure cookie still gets set and sent there.
         secure=True,
