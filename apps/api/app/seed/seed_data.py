@@ -13,7 +13,7 @@ placeholders the owner replaces through the admin panel.
 from datetime import date, timedelta
 
 from app.core.config import settings
-from app.core.security import hash_password
+from app.core.security import hash_password, verify_password
 from app.db.base import Base  # noqa: F401  (ensures models are registered)
 from app.db.session import SessionLocal, engine
 from app.models.admin_user import AdminUser
@@ -27,14 +27,35 @@ from app.models.pig import ListingType, Pig, PigGender, PigStatus
 
 
 def seed_admin_user(db) -> None:
-    if db.query(AdminUser).filter(AdminUser.email == settings.admin_email).first():
-        return
-    db.add(
-        AdminUser(
-            email=settings.admin_email,
-            hashed_password=hash_password(settings.admin_password),
+    current_admin = db.query(AdminUser).filter(AdminUser.email == settings.admin_email).first()
+
+    if current_admin is None:
+        existing_admin = db.query(AdminUser).first()
+        if existing_admin is not None:
+            existing_admin.email = settings.admin_email
+            existing_admin.hashed_password = hash_password(settings.admin_password)
+            db.add(existing_admin)
+            for stale_admin in db.query(AdminUser).filter(AdminUser.email != settings.admin_email).all():
+                db.delete(stale_admin)
+            db.commit()
+            return
+
+        db.add(
+            AdminUser(
+                email=settings.admin_email,
+                hashed_password=hash_password(settings.admin_password),
+            )
         )
-    )
+        db.commit()
+        return
+
+    if not verify_password(settings.admin_password, current_admin.hashed_password):
+        current_admin.hashed_password = hash_password(settings.admin_password)
+        db.add(current_admin)
+
+    for stale_admin in db.query(AdminUser).filter(AdminUser.email != settings.admin_email).all():
+        db.delete(stale_admin)
+
     db.commit()
 
 
@@ -64,7 +85,7 @@ def seed_farm_info(db) -> None:
             latitude=28.2096,
             longitude=83.9856,
             google_maps_embed_code=(
-                '<iframe src="https://www.google.com/maps?q=28.2096,83.9856(Bajgain%20Krishi%20Farm)' 
+                '<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4424.350224825431!2d87.98542897611591!3d26.66517617068325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e5bb006d7fe3df%3A0xc421d62cc3249d44!2sBajgain%20Krishi%20Farm!5e1!3m2!1sen!2snp!4v1784388769878!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>' 
                 '&z=14&output=embed" width="600" height="450" style="border:0;" '
                 'allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
             ),
@@ -147,7 +168,7 @@ def seed_about_page(db) -> None:
     db.add(
         AboutPage(
             story_en=(
-                "Bajgain Krishi Farm is a small family pig farm in Pokhara, Nepal. "
+                "Bajgain Krishi Farm is a small family pig farm in Jhapa, Nepal. "
                 "We started in 2023 with a handful of pigs and a simple goal: raise "
                 "healthy animals and treat our customers honestly.\n\n"
                 "Today we focus on two things only — piglets for local farmers who "
