@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     jwt_algorithm: str = "HS256"
     jwt_expire_hours: int = 24
     cors_origins: str = "http://localhost:3000"
+    cookie_domain: str = ""
     admin_email: str = "admin@bajgainfarm.com"
     admin_password: str = "changeme123"
     upload_dir: str = "uploads"

@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 from sqlalchemy.orm import Session
 
+from app.core.config import settings
 from app.core.deps import SESSION_COOKIE_NAME, get_current_admin, get_db
 from app.core.security import create_access_token, verify_password
 from app.models.admin_user import AdminUser
@@ -26,13 +27,14 @@ def login(payload: LoginRequest, response: Response, db: Session = Depends(get_d
         secure=True,
         max_age=60 * 60 * 24,
         path="/",
+        domain=settings.cookie_domain or None,
     )
     return AdminMeResponse(email=admin.email)
 
 
 @router.post("/logout")
 def logout(response: Response) -> dict[str, str]:
-    response.delete_cookie(key=SESSION_COOKIE_NAME, path="/")
+    response.delete_cookie(key=SESSION_COOKIE_NAME, path="/", domain=settings.cookie_domain or None)
     return {"status": "logged_out"}
 
 
