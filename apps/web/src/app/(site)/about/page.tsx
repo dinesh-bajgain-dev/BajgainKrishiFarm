@@ -3,7 +3,7 @@ import { PageHero } from "@/components/shared/page-hero";
 import { EntityImage } from "@/components/shared/entity-image";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { apiFetchOrNull } from "@/lib/api";
-import { formatNumber, getDictionary, loc } from "@/lib/i18n";
+import { formatYear, getDictionary, loc } from "@/lib/i18n";
 import { getLocale } from "@/lib/locale";
 import { buildPageMetadata } from "@/lib/seo";
 import type { AboutPage, FarmInfo, PageBanners } from "@/types/entities";
@@ -52,7 +52,7 @@ export default async function AboutOurFarmPage() {
             <h2 className="font-heading text-3xl font-semibold">{dict.about.storyTitle}</h2>
             {farmInfo && (
               <p className="mt-2 text-sm font-medium uppercase tracking-wide text-primary">
-                {dict.common.since} {formatNumber(farmInfo.established_year, locale)}
+                {dict.common.since} {formatYear(farmInfo.established_year, locale)}
               </p>
             )}
             <div className="mt-6">
