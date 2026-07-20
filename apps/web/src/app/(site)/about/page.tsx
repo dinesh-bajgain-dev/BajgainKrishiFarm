@@ -49,10 +49,13 @@ export default async function AboutOurFarmPage() {
       <section className="py-14 sm:py-20">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
           <AnimatedSection>
-            <h2 className="font-heading text-3xl font-semibold">{dict.about.storyTitle}</h2>
+            <h2 className="font-heading text-3xl font-semibold">
+              {dict.about.storyTitle}
+            </h2>
             {farmInfo && (
               <p className="mt-2 text-sm font-medium uppercase tracking-wide text-primary">
-                {dict.common.since} {formatYear(farmInfo.established_year, locale)}
+                {dict.common.since}{" "}
+                {formatYear(farmInfo.established_year, locale)}
               </p>
             )}
             <div className="mt-6">
@@ -100,7 +103,9 @@ export default async function AboutOurFarmPage() {
                 />
               </div>
               <div className="text-center sm:text-left">
-                <h2 className="font-heading text-2xl font-semibold">{dict.about.ownerTitle}</h2>
+                <h2 className="font-heading text-2xl font-semibold">
+                  {dict.about.ownerTitle}
+                </h2>
                 <p className="mt-4 text-muted-foreground">
                   “{loc(about, "owner_message", locale)}”
                 </p>
