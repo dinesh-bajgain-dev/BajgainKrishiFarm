@@ -1,5 +1,5 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
-import { formatAge, formatPrice, loc, toDevanagariDigits } from "@/lib/i18n";
+import { formatAge, formatPrice, formatYear, loc, toDevanagariDigits } from "@/lib/i18n";
 
 describe("loc", () => {
   it("falls back to the English field when the Nepali value is empty", () => {
@@ -32,6 +32,16 @@ describe("formatPrice", () => {
 describe("toDevanagariDigits", () => {
   it("converts every ASCII digit to its Devanagari equivalent", () => {
     expect(toDevanagariDigits("1234567890")).toBe("१२३४५६७८९०");
+  });
+});
+
+describe("formatYear", () => {
+  it("renders plain digits for English years", () => {
+    expect(formatYear(2019, "en")).toBe("2019");
+  });
+
+  it("renders Devanagari digits for Nepali years", () => {
+    expect(formatYear(2019, "ne")).toBe("२०१९");
   });
 });
 
