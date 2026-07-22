@@ -1,5 +1,11 @@
 import { describe, expect, it, beforeEach, afterEach, vi } from "vitest";
-import { formatAge, formatPrice, formatYear, loc, toDevanagariDigits } from "@/lib/i18n";
+import {
+  formatAge,
+  formatPrice,
+  formatYear,
+  loc,
+  toDevanagariDigits,
+} from "@/lib/i18n";
 
 describe("loc", () => {
   it("falls back to the English field when the Nepali value is empty", () => {
@@ -67,7 +73,9 @@ describe("formatAge", () => {
   });
 
   it("reports age in weeks for piglets under 3 months old", () => {
-    const fiveWeeksAgo = new Date(NOW.getTime() - 5 * 7 * 86_400_000).toISOString();
+    const fiveWeeksAgo = new Date(
+      NOW.getTime() - 5 * 7 * 86_400_000,
+    ).toISOString();
     expect(formatAge(fiveWeeksAgo, "en")).toBe("5 weeks old");
     expect(formatAge(fiveWeeksAgo, "ne")).toBe("५ हप्ताको");
   });
@@ -77,7 +85,9 @@ describe("formatAge", () => {
     // (floor(740/365.25)=2, floor((740-730.5)/30.44)=0) — the function floors
     // days first, so a fractional-year formula like `2 * 365.25` days can
     // truncate to 1 year 11 mo depending on rounding, hence the fixed value.
-    const twoYearsAgo = new Date(NOW.getTime() - 740 * 86_400_000).toISOString();
+    const twoYearsAgo = new Date(
+      NOW.getTime() - 740 * 86_400_000,
+    ).toISOString();
     expect(formatAge(twoYearsAgo, "en")).toBe("2 years old");
     expect(formatAge(twoYearsAgo, "ne")).toBe("२ वर्षको");
   });
