@@ -16,7 +16,18 @@ export function loc(obj: unknown, field: string, locale: Locale): string {
   return typeof fallback === "string" ? fallback : "";
 }
 
-const DEVANAGARI_DIGITS = ["०", "१", "२", "३", "४", "५", "६", "७", "८", "९"] as const;
+const DEVANAGARI_DIGITS = [
+  "०",
+  "१",
+  "२",
+  "३",
+  "४",
+  "५",
+  "६",
+  "७",
+  "८",
+  "९",
+] as const;
 
 export function toDevanagariDigits(value: string | number): string {
   return String(value).replace(/[0-9]/g, (d) => DEVANAGARI_DIGITS[Number(d)]);
@@ -27,19 +38,36 @@ export function formatNumber(value: number, locale: Locale): string {
   return locale === "ne" ? toDevanagariDigits(formatted) : formatted;
 }
 
-export function formatPrice(price: number | null | undefined, locale: Locale): string {
+export function formatYear(value: number, locale: Locale): string {
+  return locale === "ne" ? toDevanagariDigits(String(value)) : String(value);
+}
+
+export function formatPrice(
+  price: number | null | undefined,
+  locale: Locale,
+): string {
   if (price == null) {
-    return locale === "ne" ? "मूल्यका लागि सम्पर्क गर्नुहोस्" : "Contact for price";
+    return locale === "ne"
+      ? "मूल्यका लागि सम्पर्क गर्नुहोस्"
+      : "Contact for price";
   }
-  return locale === "ne" ? `रु ${formatNumber(price, "ne")}` : `Rs ${formatNumber(price, "en")}`;
+  return locale === "ne"
+    ? `रु ${formatNumber(price, "ne")}`
+    : `Rs ${formatNumber(price, "en")}`;
 }
 
 /** Human-friendly age from a date of birth, e.g. "8 weeks old" / "८ हप्ताको". */
-export function formatAge(dateOfBirth: string | null | undefined, locale: Locale): string | null {
+export function formatAge(
+  dateOfBirth: string | null | undefined,
+  locale: Locale,
+): string | null {
   if (!dateOfBirth) return null;
   const birth = new Date(dateOfBirth);
   if (Number.isNaN(birth.getTime())) return null;
-  const days = Math.max(0, Math.floor((Date.now() - birth.getTime()) / 86_400_000));
+  const days = Math.max(
+    0,
+    Math.floor((Date.now() - birth.getTime()) / 86_400_000),
+  );
   const weeks = Math.floor(days / 7);
   const months = Math.floor(days / 30.44);
   const years = Math.floor(days / 365.25);
@@ -118,7 +146,8 @@ const en = {
     viewGallery: "View full gallery",
     mapEyebrow: "Visit Us",
     mapTitle: "Find our farm",
-    mapNote: "Visitors are welcome — call ahead and we'll gladly show you around.",
+    mapNote:
+      "Visitors are welcome — call ahead and we'll gladly show you around.",
     ctaTitle: "Looking for a piglet or breeding pig?",
     ctaDescription:
       "Call us or send a message — we're happy to tell you what's available and help you choose the right pig.",
@@ -138,7 +167,8 @@ const en = {
     pigletsDescription: "Healthy, weaned piglets ready for their new homes.",
     breedingEyebrow: "Breeding Stock",
     breedingTitle: "Available Breeding Pigs",
-    breedingDescription: "Quality boars and sows for starting or growing your own herd.",
+    breedingDescription:
+      "Quality boars and sows for starting or growing your own herd.",
     empty:
       "Nothing is listed here right now. Please check back soon, or contact us to ask about upcoming litters.",
     back: "Back to all listings",
@@ -163,9 +193,11 @@ const en = {
   contact: {
     eyebrow: "Contact",
     title: "Contact Us",
-    description: "Questions about our pigs or visiting the farm? We'd love to hear from you.",
+    description:
+      "Questions about our pigs or visiting the farm? We'd love to hear from you.",
     formTitle: "Send us a message",
-    formDescription: "Fill in the form and we'll get back to you within 1–2 days.",
+    formDescription:
+      "Fill in the form and we'll get back to you within 1–2 days.",
     interestedIn: "Asking about",
     name: "Your Name",
     namePlaceholder: "Full name",
@@ -178,7 +210,8 @@ const en = {
     messagePlaceholder: "Tell us what you're looking for…",
     send: "Send Message",
     sending: "Sending…",
-    success: "Thank you! We've received your message and will be in touch soon.",
+    success:
+      "Thank you! We've received your message and will be in touch soon.",
     error: "Something went wrong. Please try again, or call us directly.",
     errorName: "Please enter your name",
     errorPhone: "Please enter a valid phone number",
@@ -235,7 +268,8 @@ const ne: Dictionary = {
     highlightsTitle: "हामीबाट किन किन्ने?",
     availableEyebrow: "अहिले बिक्रीमा",
     availableTitle: "नयाँ घर खोज्दै गरेका सुँगुरहरू",
-    availableDescription: "फार्ममा अहिले उपलब्ध केही पाठापाठी र प्रजनन सुँगुरहरू।",
+    availableDescription:
+      "फार्ममा अहिले उपलब्ध केही पाठापाठी र प्रजनन सुँगुरहरू।",
     viewPiglets: "सबै पाठापाठी",
     viewBreeding: "सबै प्रजनन सुँगुर",
     emptyPigs:
@@ -246,7 +280,8 @@ const ne: Dictionary = {
     viewGallery: "पूरा ग्यालरी हेर्नुहोस्",
     mapEyebrow: "भ्रमण गर्नुहोस्",
     mapTitle: "हाम्रो फार्म भेट्टाउनुहोस्",
-    mapNote: "आगन्तुकहरूलाई स्वागत छ — पहिले फोन गर्नुहोस्, हामी खुशीसाथ फार्म देखाउनेछौं।",
+    mapNote:
+      "आगन्तुकहरूलाई स्वागत छ — पहिले फोन गर्नुहोस्, हामी खुशीसाथ फार्म देखाउनेछौं।",
     ctaTitle: "पाठापाठी वा प्रजनन सुँगुर खोज्दै हुनुहुन्छ?",
     ctaDescription:
       "फोन गर्नुहोस् वा सन्देश पठाउनुहोस् — के के उपलब्ध छ भन्न र उपयुक्त सुँगुर छान्न हामी सहयोग गर्छौं।",
@@ -273,7 +308,8 @@ const ne: Dictionary = {
     detailsTitle: "विवरण",
     aboutPig: "यो सुँगुरबारे",
     inquiryTitle: "यो सुँगुरमा रुचि छ?",
-    inquiryDescription: "हामीलाई सन्देश पठाउनुहोस्, हामी चाँडै सम्पर्क गर्नेछौं।",
+    inquiryDescription:
+      "हामीलाई सन्देश पठाउनुहोस्, हामी चाँडै सम्पर्क गर्नेछौं।",
   },
   gallery: {
     eyebrow: "ग्यालरी",
