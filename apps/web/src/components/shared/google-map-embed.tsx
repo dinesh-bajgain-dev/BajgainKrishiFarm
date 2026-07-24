@@ -39,7 +39,7 @@ export function GoogleMapEmbed({
   placeholder?: string;
 }) {
   const src = extractIframeSrc(embedCode);
-  const wrapperClassName = ["max-w-full min-w-0", className]
+  const wrapperClassName = ["max-w-full min-w-0 overflow-hidden", className]
     .filter(Boolean)
     .join(" ");
 
@@ -52,7 +52,7 @@ export function GoogleMapEmbed({
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
-          className="block h-full w-full max-w-full rounded-2xl border border-border"
+          className="block h-full w-full max-w-full min-w-0 rounded-2xl border border-border"
         />
       ) : (
         <div className="flex h-full max-w-full items-center justify-center rounded-2xl border border-dashed border-border bg-muted/30 p-6 text-center text-sm text-muted-foreground">
