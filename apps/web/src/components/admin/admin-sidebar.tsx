@@ -98,7 +98,7 @@ export function AdminSidebar() {
   const t = getAdminDictionary(locale).sidebar;
 
   return (
-    <aside className="hidden h-screen w-64 shrink-0 flex-col border-r border-border bg-card lg:flex">
+    <aside className="hidden lg:sticky lg:top-0 lg:flex lg:h-screen lg:w-64 lg:shrink-0 lg:flex-col lg:border-r lg:border-border lg:bg-card">
       <div className="border-b border-border px-5 py-5">
         <Link href="/admin" className="font-heading text-lg font-semibold">
           {SITE_NAME}
