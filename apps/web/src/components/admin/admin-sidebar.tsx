@@ -21,7 +21,13 @@ import { SITE_NAME } from "@/lib/constants";
 import { getAdminDictionary } from "@/lib/admin-i18n";
 import { useAdminLocale } from "@/lib/use-admin-locale";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 function useNavItems() {
   const locale = useAdminLocale();
@@ -45,7 +51,9 @@ function AdminNavLinks({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <nav className="flex-1 space-y-1 overflow-y-auto p-3">
       {navItems.map((item) => {
-        const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+        const active = item.exact
+          ? pathname === item.href
+          : pathname.startsWith(item.href);
         return (
           <Link
             key={item.href}
@@ -55,7 +63,7 @@ function AdminNavLinks({ onNavigate }: { onNavigate?: () => void }) {
               "flex items-center gap-3 rounded-xl px-3 py-3 text-base font-medium transition-colors",
               active
                 ? "bg-primary text-primary-foreground"
-                : "text-foreground/70 hover:bg-muted hover:text-foreground"
+                : "text-foreground/70 hover:bg-muted hover:text-foreground",
             )}
           >
             <item.icon className="size-5" />
@@ -119,7 +127,14 @@ export function AdminMobileNav() {
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger
-        render={<Button variant="ghost" size="icon" aria-label={t.openMenu} className="lg:hidden" />}
+        render={
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label={t.openMenu}
+            className="lg:hidden"
+          />
+        }
       >
         <Menu className="size-5" />
       </SheetTrigger>
