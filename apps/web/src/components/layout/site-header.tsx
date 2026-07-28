@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { PiggyBank } from "lucide-react";
+
 import { LanguageToggle } from "@/components/layout/language-toggle";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { MobileNav } from "@/components/layout/mobile-nav";
@@ -25,9 +25,7 @@ export async function SiteHeader() {
           aria-label={farmName}
           className="flex items-center gap-2 font-heading text-lg font-semibold"
         >
-          <span className="flex size-9 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <PiggyBank aria-hidden className="size-5" />
-          </span>
+          <img src="/favicon.svg" alt="" aria-hidden className="size-9" />
           <span className="hidden sm:inline">{farmName}</span>
         </Link>
 
