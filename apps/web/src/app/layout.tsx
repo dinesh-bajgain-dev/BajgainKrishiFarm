@@ -64,10 +64,10 @@ export const metadata: Metadata = {
       : {}),
     ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION
       ? {
-          other: {
-            "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
-          },
-        }
+        other: {
+          "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION,
+        },
+      }
       : {}),
   },
 };
