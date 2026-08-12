@@ -209,18 +209,39 @@ describe("buildBreadcrumbJsonLd", () => {
 });
 
 describe("buildPigProductJsonLd", () => {
-  it("emits a Product with an NPR offer for a priced, available pig", () => {
+  it("emits a Product with brand, NPR offer, return policy, and shipping details for a priced, available pig", () => {
     const jsonLd = buildPigProductJsonLd(makePig());
     expect(jsonLd).toMatchObject({
       "@type": "Product",
       name: "Young Duroc boar",
       category: "Livestock",
+      brand: {
+        "@type": "Brand",
+        name: "Bajgain Krishi Farm",
+      },
       offers: {
         "@type": "Offer",
         price: 35000,
         priceCurrency: "NPR",
         availability: "https://schema.org/InStock",
         url: `${BASE}/pigs/p1`,
+        hasMerchantReturnPolicy: {
+          "@type": "MerchantReturnPolicy",
+          applicableCountry: "NP",
+          returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+        },
+        shippingDetails: {
+          "@type": "OfferShippingDetails",
+          shippingRate: {
+            "@type": "MonetaryAmount",
+            value: 0,
+            currency: "NPR",
+          },
+          shippingDestination: {
+            "@type": "DefinedRegion",
+            addressCountry: "NP",
+          },
+        },
       },
     });
     // /uploads/ paths resolve to the backend origin.
