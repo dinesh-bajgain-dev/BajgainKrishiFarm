@@ -184,7 +184,11 @@ export function buildPigProductJsonLd(pig: Pig) {
     description: pig.description_en || `${pig.breed_en} ${pig.listing_type} from ${SITE_NAME}`,
     ...(images.length > 0 ? { image: images } : {}),
     category: "Livestock",
-    brand: { "@id": `${SITE_URL}/#farm` },
+    brand: {
+      "@type": "Brand",
+      name: SITE_NAME,
+      "@id": `${SITE_URL}/#farm`,
+    },
     ...(pig.price != null
       ? {
           offers: {
@@ -194,6 +198,38 @@ export function buildPigProductJsonLd(pig: Pig) {
             availability: PIG_AVAILABILITY[pig.status],
             url: absoluteUrl(`/pigs/${pig.id}`),
             seller: { "@id": `${SITE_URL}/#farm` },
+            hasMerchantReturnPolicy: {
+              "@type": "MerchantReturnPolicy",
+              applicableCountry: "NP",
+              returnPolicyCategory: "https://schema.org/MerchantReturnNotPermitted",
+            },
+            shippingDetails: {
+              "@type": "OfferShippingDetails",
+              shippingRate: {
+                "@type": "MonetaryAmount",
+                value: 0,
+                currency: "NPR",
+              },
+              shippingDestination: {
+                "@type": "DefinedRegion",
+                addressCountry: "NP",
+              },
+              deliveryTime: {
+                "@type": "ShippingDeliveryTime",
+                handlingTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 0,
+                  maxValue: 1,
+                  unitCode: "DAY",
+                },
+                transitTime: {
+                  "@type": "QuantitativeValue",
+                  minValue: 1,
+                  maxValue: 3,
+                  unitCode: "DAY",
+                },
+              },
+            },
           },
         }
       : {}),
