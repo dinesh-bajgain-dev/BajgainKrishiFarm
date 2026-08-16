@@ -35,16 +35,9 @@ export const metadata: Metadata = {
   applicationName: SITE_NAME,
   icons: {
     icon: [
-      { url: "/icon-192x192.png", sizes: "192x192", type: "image/png" },
-      { url: "/favicon-48x48.png", sizes: "48x48", type: "image/png" },
-      { url: "/favicon.ico", sizes: "any" },
-    ],
-    shortcut: "/favicon.ico",
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/favicon.svg", sizes: "any", type: "image/svg+xml" },
     ],
   },
-  manifest: "/site.webmanifest",
   authors: [{ name: SITE_NAME, url: SITE_URL }],
   creator: SITE_NAME,
   category: "Agriculture",
