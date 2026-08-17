@@ -17,7 +17,7 @@ afterEach(() => {
 });
 
 describe("sitemap", () => {
-  it("lists every public route plus a detail URL per pig", async () => {
+  it("lists every public route plus a detail URL per available pig", async () => {
     vi.spyOn(api, "apiFetchOrNull").mockResolvedValue([
       PIG,
       { ...PIG, id: "p2", status: "sold" },
@@ -29,11 +29,13 @@ describe("sitemap", () => {
     for (const path of ["", "/about", "/piglets", "/breeding-pigs", "/gallery", "/location", "/contact"]) {
       expect(urls).toContain(`${BASE}${path}`);
     }
+    // Only available pigs should appear — sold pigs are excluded to avoid GSC
+    // "Page with redirect" warnings when a record is later deleted.
     expect(urls).toContain(`${BASE}/pigs/p1`);
-    expect(urls).toContain(`${BASE}/pigs/p2`);
+    expect(urls).not.toContain(`${BASE}/pigs/p2`);
   });
 
-  it("uses the pig's real updated_at as lastModified and ranks available pigs higher", async () => {
+  it("uses the pig's real updated_at as lastModified for available pigs", async () => {
     vi.spyOn(api, "apiFetchOrNull").mockResolvedValue([
       PIG,
       { ...PIG, id: "p2", status: "sold" },
@@ -41,10 +43,9 @@ describe("sitemap", () => {
 
     const entries = await sitemap();
     const available = entries.find((e) => e.url.endsWith("/pigs/p1"));
-    const sold = entries.find((e) => e.url.endsWith("/pigs/p2"));
 
     expect(available?.lastModified).toEqual(new Date("2026-06-01T00:00:00Z"));
-    expect(available?.priority).toBeGreaterThan(sold!.priority!);
+    expect(available?.priority).toBe(0.8);
   });
 
   it("still serves the static routes when the API is down", async () => {
