@@ -27,15 +27,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: route.priority,
   }));
 
-  // Pig detail pages, with real modification dates. If the API is down the
-  // sitemap still serves the static routes rather than erroring.
+  // Only index available pig pages. Sold/reserved pigs have no SEO value and,
+  // if a record is later deleted, the stale URL triggers a GSC "Page with
+  // redirect" warning. If the API is down the sitemap still serves the static
+  // routes rather than erroring.
   const pigs = (await apiFetchOrNull<Pig[]>("/api/pigs/")) ?? [];
-  const pigEntries: MetadataRoute.Sitemap = pigs.map((pig) => ({
-    url: `${baseUrl}/pigs/${pig.id}`,
-    lastModified: pig.updated_at ? new Date(pig.updated_at) : new Date(),
-    changeFrequency: "weekly",
-    priority: pig.status === "available" ? 0.8 : 0.4,
-  }));
+  const pigEntries: MetadataRoute.Sitemap = pigs
+    .filter((pig) => pig.status === "available")
+    .map((pig) => ({
+      url: `${baseUrl}/pigs/${pig.id}`,
+      lastModified: pig.updated_at ? new Date(pig.updated_at) : new Date(),
+      changeFrequency: "weekly",
+      priority: 0.8,
+    }));
 
   return [...staticEntries, ...pigEntries];
 }
