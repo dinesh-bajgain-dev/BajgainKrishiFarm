@@ -3,13 +3,6 @@ import { resolveImageUrl } from "@/lib/api";
 import { SITE_NAME, SITE_URL } from "@/lib/constants";
 import type { FarmInfo, Pig } from "@/types/entities";
 
-/**
- * All metadata and structured data is emitted in English. The site serves
- * both languages from the same URLs via the locale cookie, so crawlers (which
- * carry no cookie) always see the English variant — there are no per-locale
- * URLs to declare hreflang alternates for.
- */
-
 export const SITE_DESCRIPTION =
   "A small family pig farm in Arjundhara, Jhapa, Nepal raising healthy piglets and breeding pigs (boars and sows) for local farmers.";
 
