@@ -88,6 +88,16 @@ export const SITE_KEYWORDS = [
 "mixed livestock farm Nepal",
 "integrated farm Nepal",
 "local farm products Jhapa",
+"pig farm Nepal",
+"pig farming Nepal",
+"piglets for sale Nepal",
+"breeding pigs Nepal",
+"pig farm Jhapa",
+"piglets for sale Jhapa",
+"pig farming Jhapa",
+"pig farm Arjundhara",
+"sungur farm Nepal",
+"livestock farm Jhapa",
   SITE_NAME,
 ];
 
