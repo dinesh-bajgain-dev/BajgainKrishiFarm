@@ -63,6 +63,18 @@ export const SITE_KEYWORDS = [
 "animal farm Jhapa",
 "agriculture farm Jhapa",
 "agriculture farm Arjundhara",
+"sungur farm Nepal",
+"sungur palan Nepal",
+"sungur palan farm",
+"sungur farm Jhapa",
+"sungur palan Jhapa",
+"sungur ko bachha Nepal",
+"sungur ko bachha bikri",
+"sungur bachha bikri Jhapa",
+"sungur breeding farm",
+"sungur palan Arjundhara",
+"sungur farm Arjundhara",
+"sungur ko bachha Arjundhara",
   SITE_NAME,
 ];
 
