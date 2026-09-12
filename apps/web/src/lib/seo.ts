@@ -15,6 +15,18 @@ export const SITE_KEYWORDS = [
   "pig farming Jhapa",
   "sungur farm Nepal",
   "livestock farm Arjundhara",
+  "pig farm Nepal",
+"pig farming Nepal",
+"pig farm in Nepal",
+"pig farming business Nepal",
+"commercial pig farming Nepal",
+"pig farming company Nepal",
+"pig breeding farm Nepal",
+"piggery farm Nepal",
+"piggery farming Nepal",
+"swine farm Nepal",
+"swine farming Nepal",
+"pig livestock farm Nepal",
   SITE_NAME,
 ];
 
